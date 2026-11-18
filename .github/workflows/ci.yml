@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci
+      - run: npm install
       - name: Typecheck server
         run: npm run build -w server
       - name: Typecheck client
@@ -31,6 +31,6 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci
+      - run: npm install
       - name: Run tests
         run: npm test -w server
