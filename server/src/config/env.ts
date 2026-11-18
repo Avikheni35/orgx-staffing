@@ -6,7 +6,9 @@ function opt(key: string, fallback: string): string {
 }
 
 function validateProductionEnv() {
-  if (process.env.NODE_ENV !== 'production') return;
+  // Run for any environment that isn't explicitly development or test
+  const env = process.env.NODE_ENV ?? 'development';
+  if (env === 'development' || env === 'test') return;
   const errors: string[] = [];
   if (!process.env.JWT_ACCESS_SECRET || process.env.JWT_ACCESS_SECRET.includes('dev-')) errors.push('JWT_ACCESS_SECRET must be set to a strong secret');
   if (!process.env.JWT_REFRESH_SECRET || process.env.JWT_REFRESH_SECRET.includes('dev-')) errors.push('JWT_REFRESH_SECRET must be set to a strong secret');

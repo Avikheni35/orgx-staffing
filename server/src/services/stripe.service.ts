@@ -3,7 +3,11 @@ import { env } from '../config/env';
 import { Tenant, ITenant } from '../models/Tenant';
 import { AppError } from '../utils/AppError';
 
-const stripe = new Stripe(env.STRIPE_SECRET_KEY || 'sk_test_dummy', {
+if (env.NODE_ENV === 'production' && !env.STRIPE_SECRET_KEY) {
+  console.error('[M1] FATAL: STRIPE_SECRET_KEY must be set in production');
+  process.exit(1);
+}
+const stripe = new Stripe(env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
   apiVersion: '2026-07-29.dahlia',
 });
 

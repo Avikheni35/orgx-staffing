@@ -48,7 +48,7 @@ async function seed() {
       tenantId: tenant._id,
       role: 'agency_admin',
       email: 'agentur@demo.de',
-      passwordHash: await hashPassword('Demo1234!'),
+      passwordHash: await hashPassword(process.env.SEED_DEMO_PASSWORD ?? 'Demo1234!'),
       firstName: 'Max',
       lastName: 'Mustermann',
       status: 'active',
@@ -67,7 +67,7 @@ async function seed() {
     });
 
     console.log(`Demo tenant created (loginCode: ${demoSubdomain})`);
-    console.log('Agency admin: agentur@demo.de / Demo1234!');
+    console.log(`Agency admin: agentur@demo.de / ${process.env.SEED_DEMO_PASSWORD ?? 'Demo1234!'}`);
     console.log('Demo worker:  worker@demo.de  (magic link only)');
   } else {
     console.log('Demo tenant already exists');

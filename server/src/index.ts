@@ -26,6 +26,9 @@ app.use(helmet({
   hsts: env.NODE_ENV === 'production'
     ? { maxAge: 31536000, includeSubDomains: true, preload: true }
     : false,
+  contentSecurityPolicy: {
+    directives: { defaultSrc: ["'none'"], frameAncestors: ["'none'"] },
+  },
 }));
 app.use(
   cors({
@@ -33,6 +36,12 @@ app.use(
     credentials: true,
   })
 );
+
+// Credential endpoints always rate-limited regardless of environment
+const credentialLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 30, message: 'Too many requests' });
+app.use('/api/auth/login', credentialLimiter);
+app.use('/api/auth/magic-link', credentialLimiter);
+app.use('/api/auth/forgot-password', credentialLimiter);
 
 if (env.NODE_ENV === 'production') {
   app.use(
@@ -44,12 +53,6 @@ if (env.NODE_ENV === 'production') {
       legacyHeaders: false,
     })
   );
-
-  // Stricter limit only on credential endpoints (not refresh/me)
-  const credentialLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 30, message: 'Too many requests' });
-  app.use('/api/auth/login', credentialLimiter);
-  app.use('/api/auth/magic-link', credentialLimiter);
-  app.use('/api/auth/forgot-password', credentialLimiter);
 }
 
 // Stripe webhook needs raw body — register before express.json()
@@ -67,7 +70,7 @@ app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 app.use('/api', apiRoutes);
 
 app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', env: env.NODE_ENV });
+  res.json({ status: 'ok' });
 });
 
 app.use((_req, res) => {
