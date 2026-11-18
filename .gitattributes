@@ -1,0 +1,11 @@
+# Exclude generated and config files from GitHub language statistics
+*.config.ts    linguist-vendored
+*.d.ts         linguist-generated
+*.json         linguist-generated
+
+# Exclude test files from language stats
+server/src/__tests__/*.ts linguist-generated
+
+# Force-detect these as their own languages
+*.sh           linguist-detectable=true
+Dockerfile     linguist-detectable=true
