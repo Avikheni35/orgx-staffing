@@ -110,7 +110,7 @@ function makeTimesheetDoc(overrides: Record<string, unknown> = {}) {
 
 // ── createShift ───────────────────────────────────────────────────────────────
 describe('createShift', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); });
 
   it('creates a shift for a known business', async () => {
     mockBusiness.findOne = vi.fn().mockReturnValue({ lean: vi.fn().mockResolvedValue({ name: 'Demo GmbH', locations: [] }) });
@@ -163,7 +163,7 @@ describe('createShift', () => {
 
 // ── assignWorker ──────────────────────────────────────────────────────────────
 describe('assignWorker', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); });
 
   it('assigns an active worker to a shift with no AÜG warning', async () => {
     const shift  = makeShiftDoc();
@@ -256,7 +256,7 @@ describe('assignWorker', () => {
 
 // ── updateShift (completing triggers timesheet creation) ─────────────────────
 describe('updateShift', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); });
 
   it('throws 400 when trying to complete a shift before it has started', async () => {
     const futureStart = new Date(Date.now() + 3_600_000);
@@ -286,7 +286,7 @@ describe('updateShift', () => {
 
 // ── createTimesheetsForShift ──────────────────────────────────────────────────
 describe('createTimesheetsForShift', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); });
 
   it('creates timesheets for all non-no_show workers', async () => {
     const shift = {
@@ -345,7 +345,7 @@ describe('createTimesheetsForShift', () => {
 
 // ── updateTimesheet (dispute flow) ────────────────────────────────────────────
 describe('updateTimesheet', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); });
 
   it('marks a pending timesheet as disputed with a reason', async () => {
     const ts = makeTimesheetDoc({ status: 'pending' });
@@ -382,7 +382,7 @@ describe('updateTimesheet', () => {
 
 // ── approveTimesheet ──────────────────────────────────────────────────────────
 describe('approveTimesheet', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); });
 
   it('approves a pending timesheet and records approver and timestamp', async () => {
     const ts = makeTimesheetDoc({ status: 'pending' });

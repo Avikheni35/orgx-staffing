@@ -202,7 +202,7 @@ describe('checkArbzg', () => {
   const shift1Start = new Date('2025-06-15T06:00:00Z');
   const shift1End   = new Date('2025-06-15T14:00:00Z');
 
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); });
 
   it('passes when no conflicting shift exists', async () => {
     vi.mocked(Shift).findOne = vi.fn().mockReturnValue({ lean: vi.fn().mockResolvedValue(null) });

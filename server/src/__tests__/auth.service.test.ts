@@ -232,7 +232,7 @@ describe('refreshTokens', () => {
 
 // ── revokeRefreshToken ────────────────────────────────────────────────────────
 describe('revokeRefreshToken', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); });
 
   it('removes the matching hash from user.refreshTokenHashes', async () => {
     const targetHash = 'hash-to-remove';
